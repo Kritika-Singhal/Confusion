@@ -49,28 +49,28 @@ gulp.task('copyfonts', function() {
     .pipe(gulp.dest('./dist/fonts'));
  });
 
- gulp.task('imagemin', function() {
-    return gulp.src('img/*.{png,jpg,gif}')
-      .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-      .pipe(gulp.dest('dist/img'));
-  });
+gulp.task('imagemin', function() {
+return gulp.src('img/*.{png,jpg,gif}')
+    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
+    .pipe(gulp.dest('dist/img'));
+});
 
-  gulp.task('usemin', function() {
-    return gulp.src('./*.html')
-    .pipe(flatmap(function(stream, file){
-        return stream
-          .pipe(usemin({
-              css: [ rev() ],
-              html: [ function() { return htmlmin({ collapseWhitespace: true })} ],
-              js: [ uglify(), rev() ],
-              inlinejs: [ uglify() ],
-              inlinecss: [ cleanCss(), 'concat' ]
-          }))
-      }))
-      .pipe(gulp.dest('dist/'));
-  });
+gulp.task('usemin', function() {
+return gulp.src('./*.html')
+.pipe(flatmap(function(stream, file){
+    return stream
+        .pipe(usemin({
+            css: [ rev() ],
+            html: [ function() { return htmlmin({ collapseWhitespace: true })} ],
+            js: [ uglify(), rev() ],
+            inlinejs: [ uglify() ],
+            inlinecss: [ cleanCss(), 'concat' ]
+        }))
+    }))
+    .pipe(gulp.dest('dist/'));
+});
 
 
-  gulp.task('build', gulp.series('clean',
-    gulp.parallel('copyfonts', 'imagemin','usemin')
+gulp.task('build', gulp.series('clean',
+gulp.parallel('copyfonts', 'imagemin','usemin')
 ));
